@@ -1,0 +1,291 @@
+###############################################################################
+#
+ModulePath /usr/libexec/fvwm/2.6.5
+PixmapPath /usr/share/pixmaps/
+ImagePath /usr/share/icons
+
+OpaqueMoveSize 75
+EdgeResistance 250 75
+EdgeScroll 100 100
+ClickTime 750
+DeskTopSize 4x4
+ColormapFocus FollowsFocus
+
+Colorset 23 Transparent, fg rgb:ff/ff/c4, bg steelblue
+Colorset 24		 fg rgb:ff/ff/c4, bg steelblue
+
+MenuStyle * MenuColorset 24
+
+Style "*"                BorderWidth 2, HandleWidth 3
+Style "*"                SmartPlacement
+Style "*"                RandomPlacement
+Style "*"                NakedTransient
+Style "*"            NoTitle
+#Style "Fvwm*"            NoTitle
+Style "Fvwm*"            Sticky
+Style "Fvwm*"            WindowListSkip
+Style "Fvwm*"            NoHandles
+Style "Fvwm*"            CirculateSkipIcon
+Style "FvwmWindowList"   BorderWidth 0
+Style "FvwmPager"	 StaysOnTop
+Style "FvwmPager"	 ParentalRelativity
+Style "*"			MWMFunctions,MWMDecor,HintOverride,MWMBorder,MWMbuttons
+Style "*" ForeColor black
+Style "*" BackColor royalblue
+Style "*Firefox*"	 StartsOnPage 1 3
+Style "Psi"		 StartsOnPage 3 3
+
+DestroyFunc UrgencyFunc
+
+HilightColor black steelblue
+
+#*FvwmWindowMenu: DontShowResource .*
+#*FvwmWindowMenu: ShowName .*
+#*FvwmWindowMenu: AllPages on
+#*FvwmWindowMenu: AllDesks on
+#*FvwmWindowMenu: ItemFormat "%n"
+
+# This is when using the window list. Othervise icons would be
+# visible alltough the windowlist whas there.
+#
+Style "*"		IconBox 850x80+0+944
+Style "*"		Icon deficon.xpm
+Style "*"		SloppyFocus
+
+# press shift arrow + meta key, and move the pointer by 1/10 of a page
+Key Left	A	CM	Scroll -100 0
+Key Right	A	CM	Scroll +100 +0
+Key Up		A	CM	Scroll +0   -100
+Key Down	A	CM	Scroll +0   +100
+#Key Left	A	C	CursorMove -5 0
+#Key Right	A	C	CursorMove +5 0
+#Key Up		A	C	CursorMove 0 -5
+#Key Down	A	C	CursorMove 0 +5
+Key Left	A	CM	CursorMove -10 0
+Key Right	A	CM	CursorMove +10 0
+Key Up		A	CM	CursorMove 0 -10
+Key Down	A	CM	CursorMove 0 +10
+
+Key Tab		A	M	WindowList
+#Key Tab		A	M	SendToModule FvwmWindowMenu Popup
+
+# Keyboard accelerators
+Key F1		A	M	Popup "Main Menu"
+Key F2		A	M	Popup "Window-Ops2"
+Key F4 		A       M   	Pick Close
+Key F9 		A 	M	Thumbnail
+Key F10 	A	M 	Maximize
+
+#	0,0 	1,0 	2,0
+#	0,1 	1,1 	2,1
+#	0,2	1,2	2,2
+
+Key 1		A	M	gotopage 0 0
+Key 2		A	M	gotopage 1 0
+Key 3		A	M	gotopage 2 0
+Key 4		A	M	gotopage 3 0
+
+Key Q		A	M	gotopage 0 1
+Key W		A       M       gotopage 1 1
+Key E		A       M       gotopage 2 1
+Key R		A	M	gotopage 3 1
+
+Key A		A	M	gotopage 0 2
+Key S		A       M       gotopage 1 2
+Key D		A       M       gotopage 2 2
+Key F		A       M       gotopage 3 2
+
+Key Z		A	M	gotopage 0 3
+Key X		A       M       gotopage 1 3
+Key C		A       M       gotopage 2 3
+Key V		A       M       gotopage 3 3
+
+
+#Button		Context	Modifi	Function
+Mouse 1		R	N       PopUp "Main Menu"
+Mouse 2		R    	N      	PopUp "Window-Ops"
+Mouse 3         R       N       WindowList
+# Note the use of "Mouse 0" for AnyButton.
+Mouse 0		1    	A      	PopUp "Window-Ops2"
+Mouse 0		2	A	Maximize 100 100
+Mouse 0		4	A	Thumbnail
+Mouse 1		F	A	Function "Resize-or-Raise"
+Mouse 1		TS	A	Function "Move-or-Raise"
+Mouse 1		I	A	Function "Move-or-Iconify"
+Mouse 2		I	A	Thumbnail
+Mouse 3         TSFI    A       RaiseLower
+Mouse 2         TSFI    A       WindowShade
+#Mouse 3	W	N	RaiseLower
+
+########################Initialization Functions ############################
+AddToFunc InitFunction  "I" Module FvwmPager
+			+ I Module FvwmEvent
+AddToFunc RestartFunction "I" Module FvwmPager
+			+ I Module FvwmEvent
+########################Menus ########################################
+
+AddToMenu "Main Menu"
++			"Main Menu"	Title
++			"rxvt-unicode"		Exec urxvtc -rv -fade 50
++			"uxterm"		Exec uxterm -rv
++			"Log in to Sulaco"		Exec urxvtc -fade 50 -rv -e ssh -6 sulaco.local
++			"Log in to Nostromo"		Exec urxvtc -fade 50 -rv -e ssh -6 root@nostromo.local
++			"Log in to Powerbook"		Exec uxterm -rv -e ssh -6 powerbook.local
++			"ch"            Exec uxterm -rv ch
++                       ""              Nop
++			"Network"	Popup Network
++                       ""              Nop
++			"Office Tools"	Popup office
++			""		Nop
++			"System menu"   Popup SystemMenu
+
+AddToMenu "SystemMenu"
++			"Restart"	Restart fvwm2
+
+AddToMenu "Network"
++	"Firefox"		Exec firefox
++       "Gajim"                 Exec gajim
++	"Transmission"			Exec transmission-remote-gtk
+
+AddToMenu office
++	"GMPC"		Exec gmpc
++	"Geeqie"		Exec geeqie
+
+
+
+AddToMenu Window-Ops	"Window Ops"	Title
++			"Move"		Move-or-Raise2
++			"Resize"	Resize-or-Raise2
++			"Raise"		Raise
++			"Lower"		Lower
++		 	"(De)Iconify"	Thumbnail
++			"(Un)Stick"	Stick
++			"(Un)Maximize"	maximize_func
++			""		Nop
++			"Delete"	Delete
++			"Close"		Close
++			"Destroy"	Destroy
++			""		Nop
++			"Refresh Screen" Refresh
+
+AddToMenu MoveWindow	"Page 1"	MoveToPage 0 0
++			"Page 2"	MoveToPage 1 0
++			"Page 3"	MoveToPage 2 0
++			"Page 4"	MoveToPage 3 0
++			"Page 5"	MoveToPage 0 1
++			"Page 6"	MoveToPage 1 1
++			"Page 7"	MoveToPage 2 1
++			"Page 8"	MoveToPage 3 1
++			"Page 9"	MoveToPage 0 2
++			"Page 10"	MoveToPage 1 2
++			"Page 11"	MoveToPage 2 2
++			"Page 12"	MoveToPage 3 2
++			"Page 13"	MoveToPage 0 3
++			"Page 14"	MoveToPage 1 3
++			"Page 15"	MoveToPage 2 3
++			"Page 16"	MoveToPage 3 3
+
+
+AddToMenu Window-Ops2	"Move"		Move-or-Raise
++			"Resize"	Resize-or-Raise
++			"Raise"		Raise
++			"Lower"		Lower
++			"Iconify"	Thumbnail
++			"(Un)Stick"	Stick
++			""		Nop
++			"Delete"	Delete
++			"Close"		Close
++			"Destroy"	Destroy
++			""		Nop
++			"Move to"	Popup MoveWindow
++			""		Nop
++			"ScrollBar" 	Module FvwmScroll 2 2
+
+########################Functions ########################################
+
+AddToFunc Move-or-Raise		"I" Raise
++				"M" Move
++  				"D" Lower
+
+AddToFunc Move-or-Raise2	"M" Raise
++				"M" Move
++  				"D" Lower
+
+AddToFunc Maximize-Func		"M" Maximize	 0 100
++				"C" Maximize	 0 80
++				"D" Maximize	 100 100
+
+AddToFunc Move-or-Iconify	"I" Raise
++				"M" Move
++				"C" Thumbnail
+
+AddToFunc Resize-or-Raise	"I" Raise
++				"M" Resize
++				"D" Lower
+
+AddToFunc Resize-or-Raise2	"M" Raise
++				"M" Resize
++				"D" Lower
+
+AddToFunc Iconify-and-Raise     "I" Thumbnail
++                               "I" Raise
+
+########################## Window-Identifier ###############################
+# Just choose colors and a fonts
+*FvwmIdentBack MidnightBlue
+
+*FvwmPagerHilight steelblue
+*FvwmPagerGeometry -1-1
+*FvwmPagerLabel 0 desktop
+*FvwmPagerSmallFont 5x8
+*FvwmPager: Colorset * 23
+
+*FvwmEvent: deiconify DeThumbnail
+*FvwmIconMan: Action Mouse 2 N sendcommand Thumbnail
+################################################################################
+
+#####
+# Name:     Thumbnail
+# Purpose:  Iconify a window with a reduced screenshot of the application
+#           Window, looks really cool.
+#
+#           Uses FvwmEvent to remove the Icon when deiconified.
+#
+#           Thumbnailing example:
+#
+# http://www.fvwm.org/screenshots/desktops/Tavis_Ormandy-desk-1152x864/screenshot.jpg
+#
+# If you have a slow machine, try changing -scale to -sample, the quality of the Icons
+# won't be as good, but they are generated much faster. for a different effect, try using
+# -scale $(($[w.width]/5))
+#
+# You can also remove the command that uses composite to try to superimpose a MiniIcon
+# onto the icon, if you dont like this.
+##################
+DestroyFunc Thumbnail
+AddToFunc Thumbnail
++ I Raise
++ I ThisWindow (!Iconic) SetEnv Icon-$[w.id] $[w.iconfile]
++ I ThisWindow (!Shaded, Iconifiable, !Iconic) PipeRead \
+    "xwd -silent -id $[w.id] | convert -scale 128 -frame 1x1 \
+    -mattecolor black -quality 0 xwd:- png:$[FVWM_USERDIR]/icon.tmp.$[w.id].png \
+    && echo WindowStyle IconOverride, Icon $[FVWM_USERDIR]/icon.tmp.$[w.id].png \
+    || echo Nop"
++ I TestRc (Match) Test (f $[w.miniiconfile], f $[FVWM_USERDIR]/icon.tmp.$[w.id].png) PipeRead \
+    "composite -geometry +2+4 $[w.miniiconfile] $[FVWM_USERDIR]/icon.tmp.$[w.id].png \
+    $[FVWM_USERDIR]/icon.tmp.$[w.id].png; echo Nop"
++ I Iconify
+
+DestroyFunc DeThumbnail
+AddToFunc DeThumbnail
++ I PipeRead "echo Test \\(i \\$\\[Icon-$[w.id]\\]\\) WindowStyle Icon \\$\\[Icon-$[w.id]\\]"
++ I TestRc (NoMatch) WindowStyle NoIconOverride, Icon
++ I Exec rm -f $[FVWM_USERDIR]/icon.tmp.$[w.id].png
++ I All (Iconic, CurrentPage) PlaceAgain icon
++ I UnsetEnv Icon-$[w.id]
+
+
+# Startup
+#AddToFunc StartFunction
+#+ I Module FvwmWindowMenu
+
