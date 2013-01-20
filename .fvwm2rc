@@ -39,12 +39,6 @@ DestroyFunc UrgencyFunc
 
 HilightColor black steelblue
 
-#*FvwmWindowMenu: DontShowResource .*
-#*FvwmWindowMenu: ShowName .*
-#*FvwmWindowMenu: AllPages on
-#*FvwmWindowMenu: AllDesks on
-#*FvwmWindowMenu: ItemFormat "%n"
-
 # This is when using the window list. Othervise icons would be
 # visible alltough the windowlist whas there.
 #
@@ -67,18 +61,13 @@ Key Up		A	CM	CursorMove 0 -10
 Key Down	A	CM	CursorMove 0 +10
 
 Key Tab		A	M	WindowList
-#Key Tab		A	M	SendToModule FvwmWindowMenu Popup
 
 # Keyboard accelerators
 Key F1		A	M	Popup "Main Menu"
 Key F2		A	M	Popup "Window-Ops2"
-Key F4 		A       M   	Pick Close
-Key F9 		A 	M	Thumbnail
-Key F10 	A	M 	Maximize
-
-#	0,0 	1,0 	2,0
-#	0,1 	1,1 	2,1
-#	0,2	1,2	2,2
+Key F4		A       M	Pick Close
+Key F9		A	M	Thumbnail
+Key F10		A	M	Maximize
 
 Key 1		A	M	gotopage 0 0
 Key 2		A	M	gotopage 1 0
@@ -100,13 +89,12 @@ Key X		A       M       gotopage 1 3
 Key C		A       M       gotopage 2 3
 Key V		A       M       gotopage 3 3
 
-
 #Button		Context	Modifi	Function
 Mouse 1		R	N       PopUp "Main Menu"
-Mouse 2		R    	N      	PopUp "Window-Ops"
+Mouse 2		R	N	PopUp "Window-Ops"
 Mouse 3         R       N       WindowList
 # Note the use of "Mouse 0" for AnyButton.
-Mouse 0		1    	A      	PopUp "Window-Ops2"
+Mouse 0		1	A	PopUp "Window-Ops2"
 Mouse 0		2	A	Maximize 100 100
 Mouse 0		4	A	Thumbnail
 Mouse 1		F	A	Function "Resize-or-Raise"
@@ -126,7 +114,7 @@ AddToFunc RestartFunction "I" Module FvwmPager
 
 AddToMenu "Main Menu"
 +			"Main Menu"	Title
-+			"rxvt-unicode"		Exec urxvtc -rv -fade 50
++                       "rxvt-unicode"          Exec urxvtc -rv -fade 50
 +			"uxterm"		Exec uxterm -rv
 +			"Log in to Sulaco"		Exec urxvtc -fade 50 -rv -e ssh -6 sulaco.local
 +			"Log in to Nostromo"		Exec urxvtc -fade 50 -rv -e ssh -6 root@nostromo.local
@@ -158,7 +146,7 @@ AddToMenu Window-Ops	"Window Ops"	Title
 +			"Resize"	Resize-or-Raise2
 +			"Raise"		Raise
 +			"Lower"		Lower
-+		 	"(De)Iconify"	Thumbnail
++			"(De)Iconify"	Thumbnail
 +			"(Un)Stick"	Stick
 +			"(Un)Maximize"	maximize_func
 +			""		Nop
@@ -185,7 +173,6 @@ AddToMenu MoveWindow	"Page 1"	MoveToPage 0 0
 +			"Page 15"	MoveToPage 2 3
 +			"Page 16"	MoveToPage 3 3
 
-
 AddToMenu Window-Ops2	"Move"		Move-or-Raise
 +			"Resize"	Resize-or-Raise
 +			"Raise"		Raise
@@ -199,17 +186,17 @@ AddToMenu Window-Ops2	"Move"		Move-or-Raise
 +			""		Nop
 +			"Move to"	Popup MoveWindow
 +			""		Nop
-+			"ScrollBar" 	Module FvwmScroll 2 2
++			"ScrollBar"	Module FvwmScroll 2 2
 
 ########################Functions ########################################
 
 AddToFunc Move-or-Raise		"I" Raise
 +				"M" Move
-+  				"D" Lower
++				"D" Lower
 
 AddToFunc Move-or-Raise2	"M" Raise
 +				"M" Move
-+  				"D" Lower
++				"D" Lower
 
 AddToFunc Maximize-Func		"M" Maximize	 0 100
 +				"C" Maximize	 0 80
@@ -283,9 +270,3 @@ AddToFunc DeThumbnail
 + I Exec rm -f $[FVWM_USERDIR]/icon.tmp.$[w.id].png
 + I All (Iconic, CurrentPage) PlaceAgain icon
 + I UnsetEnv Icon-$[w.id]
-
-
-# Startup
-#AddToFunc StartFunction
-#+ I Module FvwmWindowMenu
-
