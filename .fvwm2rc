@@ -114,16 +114,17 @@ AddToFunc RestartFunction "I" Module FvwmPager
 
 AddToMenu "Main Menu"
 +			"Main Menu"	Title
-+                       "rxvt-unicode"          Exec urxvtc -rv -fade 50
-+			"uxterm"		Exec uxterm -rv
-+			"Log in to Sulaco"		Exec urxvtc -fade 50 -rv -e ssh -6 sulaco.local
-+			"Log in to Nostromo"		Exec urxvtc -fade 50 -rv -e ssh -6 root@nostromo.local
-+			"Log in to Powerbook"		Exec uxterm -rv -e ssh -6 powerbook.local
-+			"ch"            Exec uxterm -rv ch
-+                       ""              Nop
++			"rxvt-unicode"	Exec urxvtc -rv -fade 50
++			"uxterm"	Exec uxterm -rv
++			"Log in to Sulaco"	Exec urxvtc -fade 50 -rv -e ssh -6 sulaco.local
++			"Log in to Nostromo"	Exec urxvtc -fade 50 -rv -e ssh -6 root@nostromo.local
++			"Log in to Powerbook"	Exec uxterm -rv -e ssh -6 powerbook.local
++			""		Nop
 +			"Network"	Popup Network
 +                       ""              Nop
 +			"Office Tools"	Popup office
++			""		Nop
++			"Multimedia"	Popup Multimedia
 +			""		Nop
 +			"System menu"   Popup SystemMenu
 
@@ -131,15 +132,25 @@ AddToMenu "SystemMenu"
 +			"Restart"	Restart fvwm2
 
 AddToMenu "Network"
-+	"Firefox"		Exec firefox
-+       "Gajim"                 Exec gajim
-+	"Transmission"			Exec transmission-remote-gtk
++	"Firefox"		Exec systemctl --user start app@firefox.service
++	"Wireshark"		Exec systemctl --user start app@wireshark.service
++	"Gajim"			Exec systemctl --user start app@gajim.service
++	"Jitsi"			Exec jitsi
++	"Empatry"		Exec empathy
++	"Transmission"		Exec systemctl --user start app@transmission-remote-gtk.service
 
 AddToMenu office
-+	"GMPC"		Exec gmpc
-+	"Geeqie"		Exec geeqie
++	"LibreOffice"		Exec ooffice
++	"Geeqie"		Exec systemctl --user start app@geeqie.service
++	"Evince"		Exec evince
++	"Dia"			Exec dia
++	"Gimp"			Exec gimp
++	"virt-manager"		Exec systemctl --user start app@virt-manager.service
++	"FBReader"		Exec FBReader
++	"Weston"		Exec weston
 
-
+AddToMenu "Multimedia"
++	"foobnix"		Exec systemctl --user start app@foobnix.service
 
 AddToMenu Window-Ops	"Window Ops"	Title
 +			"Move"		Move-or-Raise2
